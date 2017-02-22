@@ -22,10 +22,13 @@ public class Invoice {
 	}
 
 	public void addProduct(Product product, Integer quantity) {
+		if (quantity <=0){
+			throw new IllegalArgumentException();
+		}
 		if (products.containsKey(product)) {
-			products.replace(product, (products.get(product) + 1));
+			products.replace(product, (products.get(product) + quantity));
 		} else {
-			products.put(product, 1);
+			products.put(product, quantity);
 		}
 	}
 
@@ -79,15 +82,15 @@ public class Invoice {
 		}
 		return total;
 	}
-	public static void main (String[]args){
+	//public static void main (String[]args){
 		
-		HashMap<Product, Integer> myProduct = new HashMap<Product, Integer>();
-		Product maslo = new OtherProduct("masloZ", new BigDecimal(10));
-		Product chleb = new TaxFreeProduct("chlebK", new BigDecimal(1));
-		myProduct.put( maslo, 2);
-		myProduct.put( chleb, 1);
-		Invoice invoice = new Invoice();
-		invoice.getSubtotal();
+		//HashMap<Product, Integer> myProduct = new HashMap<Product, Integer>();
+		//Product maslo = new OtherProduct("masloZ", new BigDecimal(10));
+		//Product chleb = new TaxFreeProduct("chlebK", new BigDecimal(1));
+		//myProduct.put( maslo, 2);
+		//myProduct.put( chleb, 1);
+		//Invoice invoice = new Invoice();
+		//invoice.getSubtotal();
 		
-	}
+	//}
 }
