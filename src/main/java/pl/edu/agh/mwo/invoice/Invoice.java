@@ -14,11 +14,7 @@ public class Invoice {
 
 	public void addProduct(Product product) {
 		// TODO: implement
-		if (products.containsKey(product)) {
-			products.replace(product, (products.get(product) + 1));
-		} else {
-			products.put(product, 1);
-		}
+		this.addProduct(product, 1);
 	}
 
 	public void addProduct(Product product, Integer quantity) {
@@ -33,9 +29,7 @@ public class Invoice {
 	}
 
 	public BigDecimal getSubtotal() {
-		if (products.isEmpty()) {
-			return BigDecimal.ZERO;
-		} else {
+	
 
 			BigDecimal subTotal = BigDecimal.ZERO;
 
@@ -48,14 +42,11 @@ public class Invoice {
 			return subTotal;
 		}
 
-		}
+		
 
 	
 
 	public BigDecimal getTax() {
-		if (products.isEmpty()) {
-			return BigDecimal.ZERO;
-		} else {
 			BigDecimal getTax = BigDecimal.ZERO;
 
 			for (Product product : products.keySet()) {
@@ -67,30 +58,16 @@ public class Invoice {
 			return getTax;
 
 		}
-	}
+	
 
 	public BigDecimal getTotal() {
-		if (products.isEmpty()) {
-			return BigDecimal.ZERO;
-		}
+		
+		
 		BigDecimal total = BigDecimal.ZERO;
 
-		for (Product product : products.keySet()) {
-			BigDecimal sum = product.getPriceWithTax().multiply(new BigDecimal(products.get(product)));
-			total = total.add(sum);
+		total = total.add(this.getSubtotal()).add(this.getTax());
 
-		}
 		return total;
 	}
-	//public static void main (String[]args){
-		
-		//HashMap<Product, Integer> myProduct = new HashMap<Product, Integer>();
-		//Product maslo = new OtherProduct("masloZ", new BigDecimal(10));
-		//Product chleb = new TaxFreeProduct("chlebK", new BigDecimal(1));
-		//myProduct.put( maslo, 2);
-		//myProduct.put( chleb, 1);
-		//Invoice invoice = new Invoice();
-		//invoice.getSubtotal();
-		
-	//}
+
 }
