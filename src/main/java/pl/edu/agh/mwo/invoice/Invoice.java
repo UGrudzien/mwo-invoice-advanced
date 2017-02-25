@@ -2,7 +2,7 @@ package pl.edu.agh.mwo.invoice;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
-
+import java.util.Random;
 
 import pl.edu.agh.mwo.invoice.product.OtherProduct;
 import pl.edu.agh.mwo.invoice.product.Product;
@@ -11,6 +11,12 @@ import pl.edu.agh.mwo.invoice.product.TaxFreeProduct;
 public class Invoice {
 	
 	private HashMap<Product, Integer> products = new HashMap<Product, Integer>();
+	private static int nextNumber=1;// static dlatego aby każdy kolejny tworzony obiekt nie miał wartości zero tylko ostatni numer z tworzonego obiektu
+	private int number;
+	public Invoice(){
+		this.number = nextNumber;
+		nextNumber+=1;
+	}
 
 	public void addProduct(Product product) {
 		// TODO: implement
@@ -68,6 +74,24 @@ public class Invoice {
 		total = total.add(this.getSubtotal()).add(this.getTax());
 
 		return total;
+	}
+	public Integer setInvoiceNumber(){
+		Random random =new Random();
+		Integer number = random.nextInt(8);
+		return number;
+	}
+
+	public String printedVersion() {
+		
+		String printed = String.valueOf(number);
+		for (Product product: products.keySet()){
+			printed+= "\n" + product.getName();
+			printed+= "," + product.getClass().getName();
+			printed +="," + products.get(product);
+			
+		}
+		printed +="\n" + "LICZBA PRODUKTÓW: "+ products.size();
+		return printed;
 	}
 
 }

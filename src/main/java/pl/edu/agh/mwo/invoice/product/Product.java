@@ -39,9 +39,14 @@ public abstract class Product {
 	public BigDecimal getTaxPercent() {
 		return this.taxPercent;
 	}
-
-	public BigDecimal getPriceWithTax() {
-		
-		return (new BigDecimal(1).add(this.taxPercent).multiply(this.price));
+	
+	public boolean equals(Object product){
+		return this.name==((Product)product).getName());
 	}
+
+//	public BigDecimal getPriceWithTax() {
+//		if (this instanceof WithAkcyza){
+//		price = price.add(this.getAkcyza());
+//		return (new BigDecimal(1).add(this.taxPercent).multiply(this.price));
+//	}
 }

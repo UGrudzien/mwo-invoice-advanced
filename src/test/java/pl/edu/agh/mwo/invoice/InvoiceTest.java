@@ -3,7 +3,10 @@ package pl.edu.agh.mwo.invoice;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
+import java.util.regex.Matcher;
 
+import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Test;
 
 import pl.edu.agh.mwo.invoice.Invoice;
@@ -122,5 +125,54 @@ public class InvoiceTest {
 	private void assertBigDecimalsAreEqual(BigDecimal expected, BigDecimal actual) {
 		assertEquals(expected.stripTrailingZeros(), actual.stripTrailingZeros());
 	}
-
+	@Test
+	public void testInvoiceTestInvoiceNumberGreaterThanZeo(){
+		Invoice invoice = createEmptyInvoice();
+		Assert.assertThat(invoice.setInvoiceNumber(), Matchers.greaterThan(0));
+		
+	}
+	@Test
+	public void testTwoInvoicesHasDifferentNumber(){
+		Invoice invoice = createEmptyInvoice();
+		Invoice invoice2= createEmptyInvoice();
+		Assert.assertNotEquals(invoice.setInvoiceNumber(), invoice2.setInvoiceNumber());
+	}
+	@Test
+	public void testPrintedInvoiceHasNumber(){
+		Invoice invoice = createEmptyInvoice();
+		int number=invoice.setInvoiceNumber();
+		String printedInvoice = invoice.printedVersion();
+		Assert.assertThat(printedInvoice, Matchers.containsString(String.valueOf(number)));
+	}
+	@Test
+	public void testPrintedInvoiceHasProductNumber(){
+		Invoice invoice = createEmptyInvoice();
+		invoice.addProduct(new DairyProduct("mleko",new BigDecimal("100")));
+		int number=invoice.setInvoiceNumber();
+		String printedInvoice = invoice.printedVersion();
+		Assert.assertThat(printedInvoice, Matchers.containsString(String.valueOf(number)));
+	}
+	public void testPrintedInvoiceHasProductType(){
+		Invoice invoice = createEmptyInvoice();
+		invoice.addProduct(new DairyProduct("mleko",new BigDecimal("100")));
+		int number=invoice.setInvoiceNumber();
+		String printedInvoice = invoice.printedVersion();
+		Assert.assertThat(printedInvoice, Matchers.containsString(String.valueOf(number)));
+	}
+	public void testPrintedInvoiceHasProductQuantity(){
+		Invoice invoice = createEmptyInvoice();
+		invoice.addProduct(new DairyProduct("mleko",new BigDecimal("100")));
+		int number=invoice.setInvoiceNumber();
+		String printedInvoice = invoice.printedVersion();
+		Assert.assertThat(printedInvoice, Matchers.containsString(String.valueOf(number)));
+	}
+	@Test
+	public void testPrintedInvoiceHasProductDuble(){
+		Invoice invoice = createEmptyInvoice();
+		invoice.addProduct(new DairyProduct("mleko",new BigDecimal("100")));
+		invoice.addProduct(new DairyProduct("mleko",new BigDecimal("100")));
+		
+		String printedInvoice = invoice.printedVersion();
+		Assert.assertEquals(expected, actual);(printedInvoice, Matchers.containsString("LICZBA PRODUKTÓW: 1"));
+	}
 }
